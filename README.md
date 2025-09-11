@@ -231,7 +231,7 @@ Before you begin, ensure you have:
 ### Clone the Repository or Download the code base
 
 ```bash
-git clone https://github.com/your-org/wishlist-service.git
+git clone https://github.com/johnpaulbrg/Visit-Scotland-Technical-Challenge.git
 cd wishlist-service
 ```
 
