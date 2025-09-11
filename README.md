@@ -1,7 +1,7 @@
 # Visit Scotland Wish List Technical Challenge
 
 **Author:** John Paul Brogan
-<br>**Date:** September 12, 2025  
+<br>**Date:** September 12, 2025 
 
 ---
 
@@ -11,12 +11,12 @@ Welcome to the technical challenge documentation for the VisitScotland Wish List
 
 ## Project Overview
 
-The **VisitScotland Wish List Service** is a stateless, in‑memory REST API that enables users to create, manage, and retrieve personalised wish lists of tourism experiences from across Scotland.<br>
+The **VisitScotland Wish List Service** is a stateless, in‑memory REST API that enables users to create, manage, and retrieve personalised wish lists of tourism experiences from across Scotland.
 Built for spec compliance and domain‑safe identity mapping, it places a strong emphasis on **thread safety** and **test coverage**.
 
 ### Purpose
 
-This service provides a backend for storing and manipulating user‑specific wish lists containing items such as accommodation, attractions, and events.<br>It is intended for demonstration, prototyping, and integration testing, and can be extended to use persistent storage as required.
+This service provides a backend for storing and manipulating user‑specific wish lists containing items such as accommodation, attractions, and events. It is intended for demonstration, prototyping, and integration testing, and can be extended to use persistent storage as required.
 
 ### Scope
 
@@ -44,17 +44,17 @@ This documentation is aimed at developers, reviewers, and integrators who need t
 
 ## Architecture Summary
 
-The VisitScotland Wish List Service follows a clean, layered architecture that separates concerns, enforces domain safety, and ensures thread‑safe operations.<br>This structure makes the codebase easier to maintain, extend, and test.
+The VisitScotland Wish List Service follows a clean, layered architecture that separates concerns, enforces domain safety, and ensures thread‑safe operations. This structure makes the codebase easier to maintain, extend, and test.
 
 ### Layered Structure
 
 ![Wish List Layered Architecture Diagram](WishListLayeredArchitetureDiagram.png)
 
 #### Controller Layer
-Handles HTTP requests and responses. Validates incoming data, maps between DTOs and domain objects, and applies HTTP‑semantic error handling.<br>All requests are logged with method name, URI, remote IP, and resolved user ID.
+Handles HTTP requests and responses. Validates incoming data, maps between DTOs and domain objects, and applies HTTP‑semantic error handling. All requests are logged with method name, URI, remote IP, and resolved user ID.
 
 #### Service Layer
-Stateless orchestration of business logic. Manages the lifecycle of wish lists, enforces deduplication rules, and coordinates thread‑safe mutations.<br>Uses `ConcurrentHashMap` for per‑user isolation.
+Stateless orchestration of business logic. Manages the lifecycle of wish lists, enforces deduplication rules, and coordinates thread‑safe mutations. Uses `ConcurrentHashMap` for per‑user isolation.
 
 #### Domain Model
 Core business entities:
@@ -91,7 +91,7 @@ Transport‑only objects for JSON input/output:
 
 ## Technology Stack
 
-The VisitScotland Wish List Service is built on a stable, LTS‑friendly technology stack chosen for **runtime portability**, **spec compliance**, and **long‑term maintainability**.<br>All components are aligned with the requirement to run cleanly on Java 11 and Java 21 without introducing breaking changes or unnecessary dependencies.
+The VisitScotland Wish List Service is built on a stable, LTS‑friendly technology stack chosen for **runtime portability**, **spec compliance**, and **long‑term maintainability**. All components are aligned with the requirement to run cleanly on Java 11 and Java 21 without introducing breaking changes or unnecessary dependencies.
 
 | Component            | Version        | Purpose / Rationale                                                                 |
 |----------------------|---------------|-------------------------------------------------------------------------------------|
