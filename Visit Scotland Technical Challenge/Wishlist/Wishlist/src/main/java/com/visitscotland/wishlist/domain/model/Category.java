@@ -3,7 +3,7 @@ package com.visitscotland.wishlist.domain.model;
 /**
  * Enumeration representing the classification of wish list items.
  * 
- * Categories are used to group and filter items in the {@code WishList},
+ * Categories are used to group and filter items in the wish list,
  * enabling semantic organization and targeted retrieval.
  *
  * @author John Paul Brogan
