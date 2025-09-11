@@ -90,7 +90,7 @@ Transport‑only objects for JSON input/output:
 
 ## Technology Stack
 
-The VisitScotland Wish List Service is built on a stable, LTS‑friendly technology stack chosen for **runtime portability**, **spec compliance**, and **long‑term maintainability**. All components are aligned with the requirement to run cleanly on Java 11 and Java 21 without introducing breaking changes or unnecessary dependencies.
+The Visit Scotland Wish List Service is built on a stable, LTS‑friendly technology stack chosen for **runtime portability**, **spec compliance**, and **long‑term maintainability**. All components are aligned with the requirement to run cleanly on Java 11 and Java 21 without introducing breaking changes or unnecessary dependencies.
 
 | Component            | Version        | Purpose / Rationale                                                                 |
 |----------------------|---------------|-------------------------------------------------------------------------------------|
