@@ -5,7 +5,7 @@
 
 ---
 
-Welcome to the technical challenge documentation for the VisitScotland Wish List Service.
+Welcome to the technical challenge documentation for the Visit Scotland Wish List Service.
 
 ---
 
@@ -48,9 +48,8 @@ The VisitScotland Wish List Service follows a clean, layered architecture that s
 
 ### Layered Structure
 
-![Wish List Layered Architecture Diagram](WishListLayeredArchitetureDiagram.png)
+<img width="341" height="512" alt="WishListLayeredArchitetureDiagram" src="https://github.com/user-attachments/assets/94ec1cf4-9a73-4a3a-a941-5dada076315d" />
 
-#### Controller Layer
 Handles HTTP requests and responses. Validates incoming data, maps between DTOs and domain objects, and applies HTTP‑semantic error handling. All requests are logged with method name, URI, remote IP, and resolved user ID.
 
 #### Service Layer
