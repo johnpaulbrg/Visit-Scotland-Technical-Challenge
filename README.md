@@ -70,7 +70,7 @@ Transport‑only objects for JSON input/output:
 - `ItemRequest` — Inbound payload with validation annotations.
 - `ItemResponse` — Outbound representation of an `Item`.
 - `WishListResponse` — Outbound wrapper containing `userId` and items.
-- `ErrorResponse` — Structured error payload.
+- `ResponseStatusException` — Spring managed structured error response payload.
 
 ### Concurrency Model
 
