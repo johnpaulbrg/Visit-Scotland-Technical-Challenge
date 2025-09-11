@@ -7,7 +7,7 @@ import java.util.UUID;
  * Represents a user who owns a wish list.
  * Immutable and identity-based.
  *
- * @author John
+ * @author John Paul Brogan
  * @date 2025-09-10
  */
 public final class User
