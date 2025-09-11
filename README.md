@@ -44,7 +44,7 @@ This documentation is aimed at developers, reviewers, and integrators who need t
 
 ## Architecture Summary
 
-The VisitScotland Wish List Service follows a clean, layered architecture that separates concerns, enforces domain safety, and ensures thread‑safe operations. This structure makes the codebase easier to maintain, extend, and test.
+The Visit Scotland Wish List Service follows a clean, layered architecture that separates concerns, enforces domain safety, and ensures thread‑safe operations. This structure makes the codebase easier to maintain, extend, and test.
 
 ### Layered Structure
 
