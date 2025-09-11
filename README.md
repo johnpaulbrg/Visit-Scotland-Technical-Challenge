@@ -11,7 +11,7 @@ Welcome to the technical challenge documentation for the Visit Scotland Wish Lis
 
 ## Project Overview
 
-The **VisitScotland Wish List Service** is a stateless, in‑memory REST API that enables users to create, manage, and retrieve personalised wish lists of tourism experiences from across Scotland.
+The **Visit Scotland Wish List Service** is a stateless, in‑memory REST API that enables users to create, manage, and retrieve personalised wish lists of tourism experiences from across Scotland.
 Built for spec compliance and domain‑safe identity mapping, it places a strong emphasis on **thread safety** and **test coverage**.
 
 ### Purpose
