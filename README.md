@@ -123,7 +123,7 @@ The Visit Scotland Wish List Service is built on a stable, LTS‑friendly techno
 - **Portability** — Runs unchanged across multiple LTS JVMs.
 - **Maintainability** — Avoids premature adoption of breaking platform changes.
 - **Testability** — Full unit and integration test coverage with modern tooling.
-- **Spec Alignment** — Meets all technical requirements in the VisitScotland Wish List Service specification.
+- **Spec Alignment** — Meets all technical requirements in the Visit Scotland Wish List Service specification.
 
 ---
 ## 4. Endpoints
