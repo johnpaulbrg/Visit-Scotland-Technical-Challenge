@@ -214,7 +214,7 @@ Uses ResponseStatusException for precise HTTP status codes. All errors return st
 ---
 ## Getting Started
 
-This section provides a quick, reliable path to running the VisitScotland Wish List Service locally.  
+This section provides a quick, reliable path to running the Visit Scotland Wish List Service locally.  
 Follow these steps to clone the repository, build the project, start the server, and verify the API.
 
 
