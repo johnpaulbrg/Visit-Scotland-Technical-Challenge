@@ -8,7 +8,7 @@ import java.util.UUID;
  * Immutable and identity-based.
  *
  * @author John
- * @since 2025-09-07
+ * @date 2025-09-10
  */
 public final class User
 {
