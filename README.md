@@ -232,7 +232,7 @@ Before you begin, ensure you have:
 
 ```bash
 git clone https://github.com/johnpaulbrg/Visit-Scotland-Technical-Challenge.git
-cd WishList
+cd Wishlist/wishlist
 ```
 
 or download the zip
