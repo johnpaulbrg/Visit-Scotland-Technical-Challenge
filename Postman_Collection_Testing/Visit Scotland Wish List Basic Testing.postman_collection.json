@@ -1,0 +1,275 @@
+{
+	"info": {
+		"_postman_id": "1f843ad8-66b8-456a-9d45-30ca9cca2191",
+		"name": "Visit Scotland Wish List Basic Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47613741",
+		"_collection_link": "https://johnpaulbrgn-7204211.postman.co/workspace/John-Paul-Brogan's-Workspace~99a474e4-701f-41a4-8939-d5cc55d796d4/collection/47613741-1f843ad8-66b8-456a-9d45-30ca9cca2191?action=share&source=collection_link&creator=47613741"
+	},
+	"item": [
+		{
+			"name": "Create a Wish List",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}/wishlist/john-paul-brogan",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"wishlist",
+						"john-paul-brogan"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add an Item",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"\",\r\n  \"title\": \"Edinburgh Fringe Festival\",\r\n  \"category\": \"EVENT\",\r\n  \"description\": \"Annual arts festival in Edinburgh\",\r\n  \"image\": \"https://example.com/fringe.jpg\",\r\n  \"date\": \"2025-08-15\",\r\n  \"metadata\": {\r\n    \"source\": \"VisitScotland\",\r\n    \"priority\": \"high\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/wishlist/john-paul-brogan/item",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"wishlist",
+						"john-paul-brogan",
+						"item"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add another Item",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"\",\r\n  \"title\": \"Loch Lomond Boat Tour\",\r\n  \"category\": \"ATTRACTION\",\r\n  \"description\": \"Scenic boat tour of Loch Lomond\",\r\n  \"image\": \"https://example.com/loch.jpg\",\r\n  \"date\": \"2025-09-20\",\r\n  \"metadata\": {\r\n    \"source\": \"VisitScotland\",\r\n    \"priority\": \"medium\"\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/wishlist/john-paul-brogan/item",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"wishlist",
+						"john-paul-brogan",
+						"item"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve full Wish List",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}/wishlist/john-paul-brogan",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"wishlist",
+						"john-paul-brogan"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter by Category: Only Events",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}/wishlist/john-paul-brogan?category=EVENT",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"wishlist",
+						"john-paul-brogan"
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "EVENT"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Item by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}/wishlist/john-paul-brogan/item/cc7773cb-8048-326f-9c9b-22e3a92aac46",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"wishlist",
+						"john-paul-brogan",
+						"item",
+						"cc7773cb-8048-326f-9c9b-22e3a92aac46"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Attempt to remove Same Item Again",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/wishlist/john-paul-brogan/item/ed2b4325-8dc3-4738-9080-99be92df8586",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"wishlist",
+						"john-paul-brogan",
+						"item",
+						"ed2b4325-8dc3-4738-9080-99be92df8586"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Entire Wish List",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/wishlist/john-paul-brogan",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"wishlist",
+						"john-paul-brogan"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve After Deletion",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}/wishlist/john-paul-brogan",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"wishlist",
+						"john-paul-brogan"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:8080",
+			"type": "default"
+		}
+	]
+}

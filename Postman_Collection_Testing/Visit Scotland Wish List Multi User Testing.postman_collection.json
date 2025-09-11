@@ -1,0 +1,59 @@
+{
+	"info": {
+		"_postman_id": "9cc1e979-c028-49b3-b8df-77aa2f9b4364",
+		"name": "Visit Scotland Wish List Multi User Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47613741",
+		"_collection_link": "https://johnpaulbrgn-7204211.postman.co/workspace/John-Paul-Brogan's-Workspace~99a474e4-701f-41a4-8939-d5cc55d796d4/collection/47613741-9cc1e979-c028-49b3-b8df-77aa2f9b4364?action=share&source=collection_link&creator=47613741"
+	},
+	"item": [
+		{
+			"name": "Create a Wish List alice",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}/wishlist/alice",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"wishlist",
+						"alice"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Wish List bob",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}/wishlist/bob",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"wishlist",
+						"bob"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
