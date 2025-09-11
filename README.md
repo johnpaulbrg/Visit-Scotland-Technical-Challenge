@@ -11,7 +11,7 @@ Welcome to the technical challenge documentation for the Visit Scotland Wish Lis
 
 ## Project Overview
 
-The **VisitScotland Wish List Service** is a stateless, in‑memory REST API that enables users to create, manage, and retrieve personalised wish lists of tourism experiences from across Scotland.
+The **Visit Scotland Wish List Service** is a stateless, in‑memory REST API that enables users to create, manage, and retrieve personalised wish lists of tourism experiences from across Scotland.
 Built for spec compliance and domain‑safe identity mapping, it places a strong emphasis on **thread safety** and **test coverage**.
 
 ### Purpose
@@ -44,7 +44,7 @@ This documentation is aimed at developers, reviewers, and integrators who need t
 
 ## Architecture Summary
 
-The VisitScotland Wish List Service follows a clean, layered architecture that separates concerns, enforces domain safety, and ensures thread‑safe operations. This structure makes the codebase easier to maintain, extend, and test.
+The Visit Scotland Wish List Service follows a clean, layered architecture that separates concerns, enforces domain safety, and ensures thread‑safe operations. This structure makes the codebase easier to maintain, extend, and test.
 
 ### Layered Structure
 
@@ -70,7 +70,7 @@ Transport‑only objects for JSON input/output:
 - `ItemRequest` — Inbound payload with validation annotations.
 - `ItemResponse` — Outbound representation of an `Item`.
 - `WishListResponse` — Outbound wrapper containing `userId` and items.
-- `ErrorResponse` — Structured error payload.
+- `ResponseStatusException` — Spring managed structured error response payload.
 
 ### Concurrency Model
 
@@ -90,7 +90,7 @@ Transport‑only objects for JSON input/output:
 
 ## Technology Stack
 
-The VisitScotland Wish List Service is built on a stable, LTS‑friendly technology stack chosen for **runtime portability**, **spec compliance**, and **long‑term maintainability**. All components are aligned with the requirement to run cleanly on Java 11 and Java 21 without introducing breaking changes or unnecessary dependencies.
+The Visit Scotland Wish List Service is built on a stable, LTS‑friendly technology stack chosen for **runtime portability**, **spec compliance**, and **long‑term maintainability**. All components are aligned with the requirement to run cleanly on Java 11 and Java 21 without introducing breaking changes or unnecessary dependencies.
 
 | Component            | Version        | Purpose / Rationale                                                                 |
 |----------------------|---------------|-------------------------------------------------------------------------------------|
@@ -123,7 +123,7 @@ The VisitScotland Wish List Service is built on a stable, LTS‑friendly technol
 - **Portability** — Runs unchanged across multiple LTS JVMs.
 - **Maintainability** — Avoids premature adoption of breaking platform changes.
 - **Testability** — Full unit and integration test coverage with modern tooling.
-- **Spec Alignment** — Meets all technical requirements in the VisitScotland Wish List Service specification.
+- **Spec Alignment** — Meets all technical requirements in the Visit Scotland Wish List Service specification.
 
 ---
 ## 4. Endpoints
@@ -214,7 +214,7 @@ Uses ResponseStatusException for precise HTTP status codes. All errors return st
 ---
 ## Getting Started
 
-This section provides a quick, reliable path to running the VisitScotland Wish List Service locally.  
+This section provides a quick, reliable path to running the Visit Scotland Wish List Service locally.  
 Follow these steps to clone the repository, build the project, start the server, and verify the API.
 
 
@@ -231,8 +231,8 @@ Before you begin, ensure you have:
 ### Clone the Repository or Download the code base
 
 ```bash
-git clone https://github.com/your-org/wishlist-service.git
-cd wishlist-service
+git clone https://github.com/johnpaulbrg/Visit-Scotland-Technical-Challenge.git
+cd Wishlist/wishlist
 ```
 
 or download the zip
