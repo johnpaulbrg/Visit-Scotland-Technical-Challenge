@@ -26,6 +26,7 @@ import com.visitscotland.wishlist.domain.model.WishList;
 public final class WishListService
 {
     private static final Logger log = LoggerFactory.getLogger(WishListService.class);
+
     public static final String ADDED = "added";
     public static final String DUPLICATE = "duplicate";
     public static final String REMOVED = "removed";
