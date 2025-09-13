@@ -54,6 +54,253 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Create a Wish List charlie",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}/wishlist/charlie",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"wishlist",
+						"charlie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add an Item for Alice",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"\",\r\n  \"title\": \"Loch Ness Tour\",\r\n  \"category\": \"ATTRACTION\",\r\n  \"description\": \"Scenic boat tour of Loch Ness\",\r\n  \"image\": \"https://example.com/nessie.jpg\",\r\n  \"metadata\": {\r\n    \"source\": \"VisitScotland\",\r\n    \"priority\": \"high\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/wishlist/alice/item",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"wishlist",
+						"alice",
+						"item"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add an Item for bob",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"\",\r\n  \"title\": \"Edinburgh Castle\",\r\n  \"category\": \"ATTRACTION\",\r\n  \"description\": \"Historic castle tour\",\r\n  \"image\": \"https://example.com/castle.jpg\",\r\n  \"metadata\": {\r\n    \"source\": \"VisitScotland\",\r\n    \"priority\": \"high\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/wishlist/bob/item",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"wishlist",
+						"bob",
+						"item"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add an Item for charlie",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"\",\r\n  \"title\": \"Highland Games\",\r\n  \"category\": \"EVENT\",\r\n  \"description\": \"Traditional Scottish sporting and cultural event\",\r\n  \"date\": \"2025-08-10\",\r\n  \"metadata\": {\r\n    \"source\": \"VisitScotland\",\r\n    \"priority\": \"high\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/wishlist/charlie/item",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"wishlist",
+						"charlie",
+						"item"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve full Wish List",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}/wishlist/charlie",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"wishlist",
+						"charlie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Item by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}/wishlist/charlie/item/df53ea5f-95b6-41cf-85c1-ec2e61df20f5",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"wishlist",
+						"charlie",
+						"item",
+						"df53ea5f-95b6-41cf-85c1-ec2e61df20f5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter by Category",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}/wishlist/charlie?category=EVENT",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"wishlist",
+						"charlie"
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "EVENT"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Entire Wish List",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/wishlist/bob",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"wishlist",
+						"bob"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:8080",
+			"type": "default"
 		}
 	]
 }

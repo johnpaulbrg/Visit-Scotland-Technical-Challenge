@@ -99,5 +99,12 @@
 			},
 			"response": []
 		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:8080",
+			"type": "default"
+		}
 	]
 }
