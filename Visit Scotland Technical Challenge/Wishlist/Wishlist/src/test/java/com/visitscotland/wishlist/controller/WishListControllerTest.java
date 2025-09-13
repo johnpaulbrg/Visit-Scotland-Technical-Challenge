@@ -58,7 +58,20 @@ class WishListControllerTest
                .andExpect(status().isCreated());
     }
 
- // Deletes an existing wish list and expects 200 OK
+    // Attempts to create a wish list that already exists and expects HTTP 200 OK.
+    @Test
+    void createWishlist_shouldReturnOkIfAlreadyExists() throws Exception {
+        // Arrange: Create the wish list once
+        mockMvc.perform(post("/wishlist/{userId}", userId))
+               .andExpect(status().isCreated());
+
+        // Act: Try to create it again
+        mockMvc.perform(post("/wishlist/{userId}", userId))
+               // Assert: Expect HTTP 200 OK for existing resource
+               .andExpect(status().isOk());
+    }
+
+    // Deletes an existing wish list and expects 200 OK
     @Test
     void deleteWishlist_shouldReturnOk() throws Exception {
 
@@ -73,6 +86,16 @@ class WishListControllerTest
                .andExpect(status().isOk());
     }
 
+    // Attempts to delete a non-existent wish list and expects HTTP 404 Not Found.
+    @Test
+    void deleteWishlist_shouldReturnNotFoundIfMissing() throws Exception {
+        // Act: Attempt to delete a wish list that hasn't been created
+        mockMvc.perform(delete("/wishlist/{userId}", userId))
+               // Assert: Expect HTTP 404 Not Found since the resource doesn't exist
+               .andExpect(status().isNotFound());
+    }
+
+    // Retrieves a populated wish list and validates item content and user ID.
     @Test
     void getWishList_shouldReturnOkWithItems() throws Exception {
         // Arrange: Use a stable string-based user ID for deterministic UUID generation
@@ -106,6 +129,7 @@ class WishListControllerTest
                .andExpect(jsonPath("$.items[0].category").value("EVENT"));
     }
 
+    // Retrieves a wish list filtered by category and validates the filtered result.
     @Test
     void getWishList_shouldFilterByCategory() throws Exception {
         // Arrange: Use a stable string-based user ID for deterministic UUID generation
@@ -215,6 +239,48 @@ class WishListControllerTest
                .andExpect(status().isConflict());
     }
 
+    // Adds an item with no ID in the request and expects 201 Created
+    @Test
+    void addItem_shouldGenerateId_whenRequestHasNoId() throws Exception {
+        // Arrange: Create a new wish list for the user
+        mockMvc.perform(post("/wishlist/{userId}", userId))
+               .andExpect(status().isCreated());
+
+        // Arrange: Construct an item request with no ID (null)
+        ItemRequest request = new ItemRequest();
+        request.setId(null);                            // Explicitly omit ID to trigger fallback
+        request.setTitle("Auto-ID Item");               // Valid title
+        request.setCategory(Category.EVENT);            // Valid category
+        request.setDate(LocalDate.now());               // Optional but valid
+        request.setMetadata(Map.of("source", "test"));  // Optional metadata
+
+        // Act: Submit the item via POST
+        mockMvc.perform(post("/wishlist/{userId}/item", userId)
+               .contentType(MediaType.APPLICATION_JSON)
+               .content(objectMapper.writeValueAsString(request)))
+               // Assert: Expect HTTP 201 Created to confirm successful fallback and registration
+               .andExpect(status().isCreated());
+    }
+
+    // Attempts to add an item to a non-existent wish list and expects HTTP 404 Not Found
+    @Test
+    void addItem_shouldReturnNotFoundIfWishListMissing() throws Exception {
+        // Arrange: Construct a valid item request
+        ItemRequest request = new ItemRequest();
+        request.setId(itemId);
+        request.setTitle("Test Item");
+        request.setCategory(Category.EVENT);
+        request.setDate(LocalDate.now());
+        request.setMetadata(Map.of("source", "test"));
+
+        // Act: Attempt to add the item without creating the wish list first
+        mockMvc.perform(post("/wishlist/{userId}/item", userId)
+               .contentType(MediaType.APPLICATION_JSON)
+               .content(objectMapper.writeValueAsString(request)))
+               // Assert: Expect HTTP 404 Not Found since the wish list doesn't exist
+               .andExpect(status().isNotFound());
+    }
+
     // Removes an existing item by ID and expects 200 OK
     @Test
     void removeItemById_shouldReturnOkIfFound() throws Exception {
@@ -250,6 +316,15 @@ class WishListControllerTest
         // Act: Attempt to delete an item that was never added
         mockMvc.perform(delete("/wishlist/{userId}/item/{itemId}", userId, itemId))
                // Assert: Expect HTTP 404 Not Found to confirm proper error signaling
+               .andExpect(status().isNotFound());
+    }
+
+    // Attempts to remove an item by ID when the wish list does not exist and expects HTTP 404 Not Found
+    @Test
+    void removeItemById_shouldReturnNotFoundIfWishListMissing() throws Exception {
+        // Act: Attempt to delete an item without creating the wish list first
+        mockMvc.perform(delete("/wishlist/{userId}/item/{itemId}", userId, itemId))
+               // Assert: Expect HTTP 404 Not Found due to missing wish list
                .andExpect(status().isNotFound());
     }
 
@@ -300,27 +375,21 @@ class WishListControllerTest
                // Assert: Expect HTTP 404 Not Found to confirm proper error signaling
                .andExpect(status().isNotFound());
     }
-    
-    // Adds an item with no ID in the request and expects 201 Created
+
+    // Attempts to remove an item by payload when the wish list does not exist and expects HTTP 404 Not Found
     @Test
-    void addItem_shouldGenerateId_whenRequestHasNoId() throws Exception {
-        // Arrange: Create a new wish list for the user
-        mockMvc.perform(post("/wishlist/{userId}", userId))
-               .andExpect(status().isCreated());
-
-        // Arrange: Construct an item request with no ID (null)
+    void removeItemByPayload_shouldReturnNotFoundIfWishListMissing() throws Exception {
+        // Arrange: Construct a valid item request
         ItemRequest request = new ItemRequest();
-        request.setId(null);                            // Explicitly omit ID to trigger fallback
-        request.setTitle("Auto-ID Item");               // Valid title
-        request.setCategory(Category.EVENT);            // Valid category
-        request.setDate(LocalDate.now());               // Optional but valid
-        request.setMetadata(Map.of("source", "test"));  // Optional metadata
+        request.setId(itemId);
+        request.setTitle("Orphan Item");
+        request.setCategory(Category.EVENT);
 
-        // Act: Submit the item via POST
-        mockMvc.perform(post("/wishlist/{userId}/item", userId)
+        // Act: Attempt to remove the item without creating the wish list first
+        mockMvc.perform(delete("/wishlist/{userId}/item", userId)
                .contentType(MediaType.APPLICATION_JSON)
                .content(objectMapper.writeValueAsString(request)))
-               // Assert: Expect HTTP 201 Created to confirm successful fallback and registration
-               .andExpect(status().isCreated());
+               // Assert: Expect HTTP 404 Not Found due to missing wish list
+               .andExpect(status().isNotFound());
     }
 }
