@@ -44,6 +44,7 @@ import com.visitscotland.wishlist.service.WishListService;
 public final class WishListController
 {
     private static final Logger log = LoggerFactory.getLogger(WishListController.class);
+
     private static final String MSG_WISHLIST_NOT_FOUND = "Wish list not found";
     private static final String MSG_ITEM_ALREADY_EXISTS = "Item already exists";
     private static final String MSG_ITEM_NOT_FOUND_PREFIX = "Item not found: ";
@@ -54,6 +55,7 @@ public final class WishListController
     @Autowired
     private HttpServletRequest request;
 
+    // User is always created and available on every request
     private User resolveUser(String userId) {
         UUID id = UUID.nameUUIDFromBytes(userId.getBytes());
         return new User(id, userId);

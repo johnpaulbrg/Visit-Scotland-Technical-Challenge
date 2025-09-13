@@ -25,6 +25,12 @@ public final class Item
 {
     private static final Logger log = LoggerFactory.getLogger(Item.class);
 
+    public static final String ITEM_ID_NOT_NULL = "Item ID must not be null";
+    public static final String ITEM_TITLE_NOT_NULL = "Item title must not be null";
+    public static final String ITEM_CATEGORY_NOT_NULL = "Item category must not be null";
+    public static final String CONSTRUCTED_ITEM = "Constructed Item: title='{}', category={}, id={}";
+    public static final String EQUALITY_CHECK = "equals: comparing Item '{}' to '{}': {}";
+
     private final UUID id;
     private final String title;
     private final Category category;
@@ -36,15 +42,15 @@ public final class Item
     public Item(UUID id, String title, Category category,
                 String description, String image,
                 LocalDate date, Map<String, Object> metadata) {
-        this.id = Objects.requireNonNull(id, "Item ID must not be null");
-        this.title = Objects.requireNonNull(title, "Item title must not be null");
-        this.category = Objects.requireNonNull(category, "Item category must not be null");
+        this.id = Objects.requireNonNull(id, ITEM_ID_NOT_NULL);
+        this.title = Objects.requireNonNull(title, ITEM_TITLE_NOT_NULL);
+        this.category = Objects.requireNonNull(category, ITEM_CATEGORY_NOT_NULL);
         this.description = description;
         this.image = image;
         this.date = date;
         this.metadata = metadata;
 
-        log.debug("Constructed Item: title='{}', category={}, id={}", title, category, id);
+        log.debug(CONSTRUCTED_ITEM, title, category, id);
     }
 
     public UUID getId() {
@@ -88,20 +94,20 @@ public final class Item
                         Objects.equals(date, other.date) &&
                         Objects.equals(metadata, other.metadata);
 
-        log.debug("equals: comparing Item '{}' to '{}': {}", this.id, other.id, match);
+        log.debug(EQUALITY_CHECK, this.id, other.id, match);
         return match;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-            id,
-            title.toLowerCase(),
-            category,
-            description,
-            image,
-            date,
-            metadata
-        );
+	    return Objects.hash(
+	        id,
+	        title.toLowerCase(),
+	        category,
+	        description,
+	        image,
+	        date,
+	        metadata
+	    );
     }
 }
