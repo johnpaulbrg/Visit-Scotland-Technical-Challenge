@@ -80,7 +80,7 @@
 			"response": []
 		},
 		{
-			"name": "Add an Item for Alice",
+			"name": "Add an Item for alice",
 			"request": {
 				"method": "POST",
 				"header": [
