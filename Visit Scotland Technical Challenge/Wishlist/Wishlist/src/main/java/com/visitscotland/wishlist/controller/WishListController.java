@@ -44,6 +44,9 @@ import com.visitscotland.wishlist.service.WishListService;
 public final class WishListController
 {
     private static final Logger log = LoggerFactory.getLogger(WishListController.class);
+    private static final String MSG_WISHLIST_NOT_FOUND = "Wish list not found";
+    private static final String MSG_ITEM_ALREADY_EXISTS = "Item already exists";
+    private static final String MSG_ITEM_NOT_FOUND_PREFIX = "Item not found: ";
 
     @Autowired
     private WishListService wishListService;
@@ -81,7 +84,7 @@ public final class WishListController
         logRequest("delete", user);
 
         if (!wishListService.hasWishList(user)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Wish list not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MSG_WISHLIST_NOT_FOUND);
         }
 
         wishListService.clearWishList(user);
@@ -97,7 +100,7 @@ public final class WishListController
         logRequest("get", user);
 
         if (!wishListService.hasWishList(user)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Wish list not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MSG_WISHLIST_NOT_FOUND);
         }
 
         Set<Item> items = (category == null)
@@ -119,7 +122,7 @@ public final class WishListController
         logRequest("addItem", user);
 
         if (!wishListService.hasWishList(user)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Wish list not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MSG_WISHLIST_NOT_FOUND);
         }
 
         Item item = new Item(
@@ -134,7 +137,7 @@ public final class WishListController
 
         boolean added = wishListService.addItem(user, item);
         if (!added) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Item already exists");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, MSG_ITEM_ALREADY_EXISTS);
         }
 
         URI location = URI.create("/wishlist/" + userId + "/item/" + item.getId());
@@ -149,12 +152,12 @@ public final class WishListController
         logRequest("removeItemById", user);
 
         if (!wishListService.hasWishList(user)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Wish list not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MSG_WISHLIST_NOT_FOUND);
         }
 
         boolean removed = wishListService.removeItemById(user, itemId);
         if (!removed) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Item not found: " + itemId);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MSG_ITEM_NOT_FOUND_PREFIX + itemId);
         }
 
         return ResponseEntity.ok().build();
@@ -168,7 +171,7 @@ public final class WishListController
         logRequest("removeItemByPayload", user);
 
         if (!wishListService.hasWishList(user)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Wish list not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MSG_WISHLIST_NOT_FOUND);
         }
 
         Item item = new Item(
@@ -183,7 +186,7 @@ public final class WishListController
 
         boolean removed = wishListService.removeItem(user, item);
         if (!removed) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Item not found: " + item.getId());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MSG_ITEM_NOT_FOUND_PREFIX + item.getId());
         }
 
         return ResponseEntity.ok().build();
