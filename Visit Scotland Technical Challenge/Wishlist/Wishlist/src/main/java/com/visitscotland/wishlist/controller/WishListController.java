@@ -1,5 +1,6 @@
 package com.visitscotland.wishlist.controller;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -46,7 +47,7 @@ public final class WishListController
 
     @Autowired
     private WishListService wishListService;
-    
+
     @Autowired
     private HttpServletRequest request;
 
@@ -64,14 +65,25 @@ public final class WishListController
     public ResponseEntity<Void> create(@PathVariable String userId) {
         User user = resolveUser(userId);
         logRequest("create", user);
+
+        if (wishListService.hasWishList(user)) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+
         wishListService.createWishList(user);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        URI location = URI.create("/wishlist/" + userId);
+        return ResponseEntity.created(location).build();
     }
 
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> delete(@PathVariable String userId) {
         User user = resolveUser(userId);
         logRequest("delete", user);
+
+        if (!wishListService.hasWishList(user)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Wish list not found");
+        }
+
         wishListService.clearWishList(user);
         wishListService.deleteWishList(user);
         return ResponseEntity.ok().build();
@@ -106,6 +118,10 @@ public final class WishListController
         User user = resolveUser(userId);
         logRequest("addItem", user);
 
+        if (!wishListService.hasWishList(user)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Wish list not found");
+        }
+
         Item item = new Item(
             requestBody.getId() != null ? requestBody.getId() : UUID.randomUUID(),
             requestBody.getTitle(),
@@ -121,7 +137,8 @@ public final class WishListController
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Item already exists");
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        URI location = URI.create("/wishlist/" + userId + "/item/" + item.getId());
+        return ResponseEntity.created(location).build();
     }
 
     @DeleteMapping("/{userId}/item/{itemId}")
@@ -130,6 +147,10 @@ public final class WishListController
             @PathVariable UUID itemId) {
         User user = resolveUser(userId);
         logRequest("removeItemById", user);
+
+        if (!wishListService.hasWishList(user)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Wish list not found");
+        }
 
         boolean removed = wishListService.removeItemById(user, itemId);
         if (!removed) {
@@ -145,6 +166,10 @@ public final class WishListController
             @Valid @RequestBody ItemRequest requestBody) {
         User user = resolveUser(userId);
         logRequest("removeItemByPayload", user);
+
+        if (!wishListService.hasWishList(user)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Wish list not found");
+        }
 
         Item item = new Item(
             requestBody.getId(),
