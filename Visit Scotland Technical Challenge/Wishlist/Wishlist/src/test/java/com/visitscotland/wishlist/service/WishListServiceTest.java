@@ -56,6 +56,7 @@ class WishListServiceTest
         service = new WishListService(wishListProvider);
     }
 
+    // Should create and store a wish list for a new user
     @Test
     void createWishList_shouldStoreNewWishList_whenUserIsNew() {
         // Act: Invoke method under test to create a wish list for a new user
@@ -68,6 +69,7 @@ class WishListServiceTest
         assertTrue(service.hasWishList(user));
     }
 
+    // Should delete existing wish list for a user
     @Test
     void deleteWishList_shouldRemoveWishList_whenUserHasOne() {
         // Arrange: Ensure the user has a wish list before deletion
@@ -80,6 +82,7 @@ class WishListServiceTest
         assertFalse(service.hasWishList(user));
     }
 
+    // Should do nothing if user has no wish list
     @Test
     void deleteWishList_shouldDoNothing_whenWishListDoesNotExist() {
         // Arrange: Create a deterministic user with no wish list
@@ -109,6 +112,7 @@ class WishListServiceTest
         verify(wishListProvider, never()).getObject(user);
     }
 
+    // Should add item successfully when it's new
     @Test
     void addItem_shouldReturnTrue_whenItemIsNew() {
         // Arrange: Mock wish list behavior to simulate successful addition of a new item
@@ -127,6 +131,7 @@ class WishListServiceTest
         verify(mockWishList).addItem(mockItem);
     }
 
+    // Should reject duplicate item addition
     @Test
     void addItem_shouldReturnFalse_whenItemAlreadyExists() {
         // Arrange: Mock wish list behavior to simulate first-time success, then rejection on duplicate
@@ -144,7 +149,8 @@ class WishListServiceTest
         // Assert: Verify that addItem was called exactly twice with the same item
         verify(mockWishList, times(2)).addItem(mockItem);
     }
-
+    
+    // Should return stored items from wish list
     @Test
     void getItems_shouldReturnStoredItems_whenWishListExists() {
         // Arrange: Create a mock item set with one item to simulate stored wish list contents
@@ -166,6 +172,7 @@ class WishListServiceTest
         verify(mockWishList).getItems();
     }
 
+    // Should return items filtered by category
     @Test
     void getItemsByCategory_shouldReturnFilteredItems_whenCategoryMatches() {
         // Arrange: Create a mock item set to simulate filtered results for the given category
@@ -187,6 +194,7 @@ class WishListServiceTest
         verify(mockWishList).filterByCategory(Category.EVENT);
     }
 
+    // Should remove item by ID if it exists
     @Test
     void removeItemById_shouldReturnTrue_whenItemExists() {
         // Arrange: Generate a deterministic item ID to simulate an existing item
@@ -208,6 +216,7 @@ class WishListServiceTest
         verify(mockWishList).removeItem(itemId);
     }
 
+    // Should remove item by reference if it exists
     @Test
     void removeItem_shouldReturnTrue_whenItemExists() {
         // Arrange: Stub wish list behavior to simulate successful removal of the given item
@@ -226,6 +235,7 @@ class WishListServiceTest
         verify(mockWishList).removeItem(mockItem);
     }
 
+    // Should confirm item presence by ID
     @Test
     void containsItem_shouldReturnTrue_whenItemIsPresent() {
         // Arrange: Generate a deterministic item ID to simulate a known item
@@ -244,6 +254,7 @@ class WishListServiceTest
         verify(mockWishList).containsItem(itemId);
     }
 
+    // Should return correct wish list size
     @Test
     void getWishListSize_shouldReturnItemCount_whenItemsExist() {
         // Arrange: Stub wish list behavior to simulate a list containing two items
@@ -262,6 +273,7 @@ class WishListServiceTest
         verify(mockWishList).size();
     }
 
+    // Should clear all items from wish list
     @Test
     void clearWishList_shouldRemoveAllItems_whenWishListIsNotEmpty() {
         // Arrange: Ensure the user has an initialized wish list
@@ -274,6 +286,7 @@ class WishListServiceTest
         verify(mockWishList).clear();
     }
 
+    // Should create wish list implicitly when none exists
     @Test
     void getItems_shouldCreateWishList_whenNoneExistsForUser() {
         // Arrange: Create a deterministic user who has no pre-existing wish list
