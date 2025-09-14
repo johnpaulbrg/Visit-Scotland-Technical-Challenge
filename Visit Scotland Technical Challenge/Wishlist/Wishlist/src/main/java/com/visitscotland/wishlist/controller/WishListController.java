@@ -45,6 +45,7 @@ public final class WishListController
 {
     private static final Logger log = LoggerFactory.getLogger(WishListController.class);
 
+    private static final String MSG_LOG_REQUEST = "Request [{}] from {} to {} for user {}";
     private static final String MSG_WISHLIST_NOT_FOUND = "Wish list not found";
     private static final String MSG_ITEM_ALREADY_EXISTS = "Item already exists";
     private static final String MSG_ITEM_NOT_FOUND_PREFIX = "Item not found: ";
@@ -62,10 +63,16 @@ public final class WishListController
     }
 
     private void logRequest(String methodName, User user) {
-        log.info("Request [{}] from {} to {} for user {}", methodName,
+        log.info(MSG_LOG_REQUEST, methodName,
                  request.getRemoteAddr(), request.getRequestURI(), user.getId());
     }
 
+    private void checkWishListExists(User user) {
+    	if (!wishListService.hasWishList(user)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MSG_WISHLIST_NOT_FOUND);
+        }
+    }
+    
     @PostMapping("/{userId}")
     public ResponseEntity<Void> create(@PathVariable String userId) {
         User user = resolveUser(userId);
@@ -85,9 +92,7 @@ public final class WishListController
         User user = resolveUser(userId);
         logRequest("delete", user);
 
-        if (!wishListService.hasWishList(user)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MSG_WISHLIST_NOT_FOUND);
-        }
+        checkWishListExists(user);
 
         wishListService.clearWishList(user);
         wishListService.deleteWishList(user);
@@ -96,14 +101,12 @@ public final class WishListController
 
     @GetMapping("/{userId}")
     public ResponseEntity<WishListResponse> get(
-            @PathVariable String userId,
-            @RequestParam(required = false) Category category) {
+    		@PathVariable String userId,
+    		@RequestParam(required = false) Category category) {
         User user = resolveUser(userId);
         logRequest("get", user);
 
-        if (!wishListService.hasWishList(user)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MSG_WISHLIST_NOT_FOUND);
-        }
+        checkWishListExists(user);
 
         Set<Item> items = (category == null)
                 ? wishListService.getItems(user)
@@ -123,9 +126,7 @@ public final class WishListController
         User user = resolveUser(userId);
         logRequest("addItem", user);
 
-        if (!wishListService.hasWishList(user)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MSG_WISHLIST_NOT_FOUND);
-        }
+        checkWishListExists(user);
 
         Item item = new Item(
             requestBody.getId() != null ? requestBody.getId() : UUID.randomUUID(),
@@ -153,9 +154,7 @@ public final class WishListController
         User user = resolveUser(userId);
         logRequest("removeItemById", user);
 
-        if (!wishListService.hasWishList(user)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MSG_WISHLIST_NOT_FOUND);
-        }
+        checkWishListExists(user);
 
         boolean removed = wishListService.removeItemById(user, itemId);
         if (!removed) {
@@ -172,9 +171,7 @@ public final class WishListController
         User user = resolveUser(userId);
         logRequest("removeItemByPayload", user);
 
-        if (!wishListService.hasWishList(user)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MSG_WISHLIST_NOT_FOUND);
-        }
+        checkWishListExists(user);
 
         Item item = new Item(
             requestBody.getId(),
