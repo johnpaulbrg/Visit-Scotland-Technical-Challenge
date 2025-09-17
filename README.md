@@ -126,7 +126,7 @@ The Visit Scotland Wish List Service is built on a stable, LTS‑friendly techno
 - **Spec Alignment** — Meets all technical requirements in the Visit Scotland Wish List Service specification.
 
 ---
-## 4. Endpoints
+## Endpoints
 
 | Method | Endpoint                                      | Description               |
 |--------|-----------------------------------------------|---------------------------|
@@ -287,7 +287,7 @@ src/
      │    └── controller/       # Integration tests
 ```
 
-### 5.8 Default Configuration
+### Default Configuration
 
 - **Port:** `8080`  
 - **Context path:** `/wishlist`  
