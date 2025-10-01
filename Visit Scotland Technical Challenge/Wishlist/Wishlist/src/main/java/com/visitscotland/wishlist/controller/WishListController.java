@@ -45,7 +45,7 @@ public final class WishListController
 {
     private static final Logger log = LoggerFactory.getLogger(WishListController.class);
 
-    private static final String MSG_LOG_REQUEST = "Request [{}] from {} to {} for user {}";
+    private static final String MSG_LOG_REQUEST = "Request [{}] from {} to {} for {}";
     private static final String MSG_WISHLIST_NOT_FOUND = "Wish list not found";
     private static final String MSG_ITEM_ALREADY_EXISTS = "Item already exists";
     private static final String MSG_ITEM_NOT_FOUND_PREFIX = "Item not found: ";
@@ -63,8 +63,10 @@ public final class WishListController
     }
 
     private void logRequest(String methodName, User user) {
-        log.info(MSG_LOG_REQUEST, methodName,
-                 request.getRemoteAddr(), request.getRequestURI(), user.getId());
+    	StringBuffer url = request.getRequestURL(); // Includes scheme, host, port, and path
+    	String queryString = request.getQueryString(); // Optional query parameters
+    	String fullUrl = queryString == null ? url.toString() : url.append('?').append(queryString).toString();
+        log.info(MSG_LOG_REQUEST, methodName, request.getRemoteAddr(), fullUrl, user);
     }
 
     private void checkWishListExists(User user) {
