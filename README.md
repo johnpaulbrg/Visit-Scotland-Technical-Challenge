@@ -20,21 +20,21 @@ This service provides a backend for storing and manipulating user‑specific wis
 
 ### Scope
 
-- **In‑memory only** — no database or external persistence layer  
-- **RESTful interface** — JSON over HTTP  
-- **Domain‑safe identity** — deterministic UUID mapping from user IDs  
-- **Thread‑safe operations** — per‑user isolation and synchronised mutations  
-- **Spec‑driven design** — all endpoints, DTOs, and behaviours align with the documented requirements  
+- **In‑memory only** — no database or external persistence layer.
+- **RESTful interface** — JSON over HTTP.
+- **Domain‑safe identity** — deterministic UUID mapping from user IDs.
+- **Thread‑safe operations** — per‑user isolation and synchronised mutations.
+- **Spec‑driven design** — all endpoints, DTOs, and behaviours align with the documented requirements.
 
 ### Key Features
 
-- Create and delete wish lists per user  
-- Add and remove items by ID or full payload  
-- Filter items by category (`ACCOMMODATION`, `ATTRACTION`, `EVENT`)  
-- Deduplicate items using full‑field equality  
-- Structured logging for auditability  
-- Declarative validation for all inbound data  
-- Comprehensive unit and integration tests  
+- Create and delete wish lists per user.
+- Add and remove items by ID or full payload.
+- Filter items by category (`ACCOMMODATION`, `ATTRACTION`, `EVENT`).
+- Deduplicate items using full‑field equality.
+- Structured logging for auditability.
+- Declarative validation for all inbound data.
+- Comprehensive unit and integration tests.
 
 ### Intended Audience
 
@@ -153,14 +153,14 @@ The Visit Scotland Wish List Service is built on a stable, LTS‑friendly techno
   }
 }
 ```
-- Required for add: title, category
-- Required for remove by payload: id, title, category
-- id is generated if absent during add
+- Required for add: title, category.
+- Required for remove by payload: id, title, category.
+- id is generated if absent during add.
 
 ### Response: 'ItemResponse' (JSON)
-- Same fields as ItemRequest
-- id always present
-- Optional fields omitted if null
+- Same fields as ItemRequest.
+- id always present.
+- Optional fields omitted if null.
 
 ### Response: `WishListResponse`
 
@@ -187,10 +187,10 @@ The Visit Scotland Wish List Service is built on a stable, LTS‑friendly techno
   ]
 }
 ```
-- userId: Original string identifier (e.g. test.user)
-- items: Array of ItemResponse objects
-- Each item includes all relevant fields
-- Optional fields like description, image, date, and metadata are omitted if null
+- userId: Original string identifier (e.g. test.user).
+- items: Array of ItemResponse objects.
+- Each item includes all relevant fields.
+- Optional fields like description, image, date, and metadata are omitted if null.
 
 
 ### Error Handling
@@ -207,9 +207,9 @@ Uses ResponseStatusException for precise HTTP status codes. All errors return st
 ```
 
 ### Postman Setup Tips
-- Set Content-Type: application/json in headers
-- Use raw JSON body for POST / DELETE with payload
-- Save common requests as Postman collections for reuse
+- Set Content-Type: application/json in headers.
+- Use raw JSON body for POST / DELETE with payload.
+- Save common requests as Postman collections for reuse.
 
 ---
 ## Getting Started
@@ -289,9 +289,9 @@ src/
 
 ### Default Configuration
 
-- **Port:** `8080`  
-- **Context path:** `/wishlist`  
-- **Persistence:** In‑memory only (data cleared on restart)  
-- **Logging:** Console and file output with structured request/mutation logs 
+- **Port:** `8080`.
+- **Context path:** `/wishlist`.
+- **Persistence:** In‑memory only (data cleared on restart).
+- **Logging:** Console and file output with structured request/mutation logs.
 
 ---
