@@ -20,21 +20,21 @@ This service provides a backend for storing and manipulating user‑specific wis
 
 ### Scope
 
-- **In‑memory only** — no database or external persistence layer.
-- **RESTful interface** — JSON over HTTP.
-- **Domain‑safe identity** — deterministic UUID mapping from user IDs.
-- **Thread‑safe operations** — per‑user isolation and synchronised mutations.
-- **Spec‑driven design** — all endpoints, DTOs, and behaviours align with the documented requirements.
+- **In‑memory only** — no database or external persistence layer
+- **RESTful interface** — JSON over HTTP
+- **Domain‑safe identity** — deterministic UUID mapping from user IDs
+- **Thread‑safe operations** — per‑user isolation and synchronised mutations
+- **Spec‑driven design** — all endpoints, DTOs, and behaviours align with the documented requirements
 
 ### Key Features
 
-- Create and delete wish lists per user.
-- Add and remove items by ID or full payload.
-- Filter items by category (`ACCOMMODATION`, `ATTRACTION`, `EVENT`).
-- Deduplicate items using full‑field equality.
-- Structured logging for auditability.
-- Declarative validation for all inbound data.
-- Comprehensive unit and integration tests.
+- Create and delete wish lists per user
+- Add and remove items by ID or full payload
+- Filter items by category (`ACCOMMODATION`, `ATTRACTION`, `EVENT`)
+- Deduplicate items using full‑field equality
+- Structured logging for auditability
+- Declarative validation for all inbound data
+- Comprehensive unit and integration tests
 
 ### Intended Audience
 
@@ -57,34 +57,34 @@ Stateless orchestration of business logic. Manages the lifecycle of wish lists, 
 
 #### Domain Model
 Core business entities:
-- `User` — Immutable, domain‑safe identity derived from `userId` string.
-- `Item` — Immutable, full‑field equality to prevent duplicates.
-- `Category` — Enum: `ACCOMMODATION`, `ATTRACTION`, `EVENT`.
-- `WishList` — Holds a `User` and a set of `Item` objects; synchronised mutation methods.
+- `User` — Immutable, domain‑safe identity derived from `userId` string
+- `Item` — Immutable, full‑field equality to prevent duplicates
+- `Category` — Enum: `ACCOMMODATION`, `ATTRACTION`, `EVENT`
+- `WishList` — Holds a `User` and a set of `Item` objects; synchronised mutation methods
 
 #### In‑Memory Store
 `ConcurrentHashMap<UUID, WishList>` keyed by the user’s domain‑safe UUID. No persistence layer; all data is lost on application restart.
 
 #### DTO Layer
 Transport‑only objects for JSON input/output:
-- `ItemRequest` — Inbound payload with validation annotations.
-- `ItemResponse` — Outbound representation of an `Item`.
-- `WishListResponse` — Outbound wrapper containing `userId` and items.
-- `ResponseStatusException` — Spring managed structured error response payload.
+- `ItemRequest` — Inbound payload with validation annotations
+- `ItemResponse` — Outbound representation of an `Item`
+- `WishListResponse` — Outbound wrapper containing `userId` and items
+- `ResponseStatusException` — Spring managed structured error response payload
 
 ### Concurrency Model
 
-- **Per‑User Isolation** — Each wish list is stored separately in the map.  
-- **Synchronized Mutations** — All changes to a `WishList` are synchronised at the instance level.  
-- **No Global Locks** — Avoids blocking across users, ensuring scalability for concurrent requests.  
+- **Per‑User Isolation** — Each wish list is stored separately in the map
+- **Synchronized Mutations** — All changes to a `WishList` are synchronised at the instance level
+- **No Global Locks** — Avoids blocking across users, ensuring scalability for concurrent requests
 
 ### Design Principles
 
-- **Domain‑Safe Identity** — Deterministic UUID mapping from `userId` ensures consistent lookups.  
-- **Full‑Field Equality** — Prevents subtle duplicates by comparing all item fields.  
-- **DTO/Domain Separation** — Prevents transport concerns from leaking into business logic.  
-- **Spec Compliance** — All endpoints, DTOs, and behaviours match the documented requirements.  
-- **Auditability** — Structured logging at every layer for traceability.
+- **Domain‑Safe Identity** — Deterministic UUID mapping from `userId` ensures consistent lookups
+- **Full‑Field Equality** — Prevents subtle duplicates by comparing all item fields
+- **DTO/Domain Separation** — Prevents transport concerns from leaking into business logic
+- **Spec Compliance** — All endpoints, DTOs, and behaviours match the documented requirements
+- **Auditability** — Structured logging at every layer for traceability
 
 ---
 
@@ -94,36 +94,36 @@ The Visit Scotland Wish List Service is built on a stable, LTS‑friendly techno
 
 | Component            | Version        | Purpose / Rationale                                                                 |
 |----------------------|---------------|-------------------------------------------------------------------------------------|
-| **Java**             | 21 (compiled to 11 bytecode) | Development uses JDK 21 for tooling; `--release 11` ensures compatibility with Java 11+ runtimes. |
-| **Spring Boot**      | 2.7.18         | Final 2.x release; stable across Java 11–21; avoids Jakarta EE migration in 3.x.    |
-| **Spring Framework** | 5.3.32         | Final 5.x release; compatible with Java 11–21; no namespace changes.                |
-| **Maven**            | 3.9.x+         | Build automation, dependency management, and reproducible builds.                   |
-| **JUnit 5**          | 5.x            | Modern testing framework; supports parameterised tests and improved assertions.     |
-| **Mockito**          | 5.12.0         | Mocking framework for isolated unit testing of service logic.                        |
-| **Spring Boot Starter Web** | 2.7.18 | Provides embedded Tomcat, REST controller support, and JSON serialization.          |
-| **Spring Boot Starter Validation** | 2.7.18 | Enables declarative validation via `javax.validation` annotations.                  |
+| **Java**             | 21 (compiled to 11 bytecode) | Development uses JDK 21 for tooling; `--release 11` ensures compatibility with Java 11+ runtimes |
+| **Spring Boot**      | 2.7.18         | Final 2.x release; stable across Java 11–21; avoids Jakarta EE migration in 3.x    |
+| **Spring Framework** | 5.3.32         | Final 5.x release; compatible with Java 11–21; no namespace changes                |
+| **Maven**            | 3.9.x+         | Build automation, dependency management, and reproducible builds                   |
+| **JUnit 5**          | 5.x            | Modern testing framework; supports parameterised tests and improved assertions     |
+| **Mockito**          | 5.12.0         | Mocking framework for isolated unit testing of service logic                        |
+| **Spring Boot Starter Web** | 2.7.18 | Provides embedded Tomcat, REST controller support, and JSON serialization          |
+| **Spring Boot Starter Validation** | 2.7.18 | Enables declarative validation via `javax.validation` annotations                  |
 
 ### Design Constraints
 
-- **No persistence layer** — all data is stored in‑memory using `ConcurrentHashMap`.
-- **No Lombok** — explicit constructors and getters for transparency and traceability.
-- **No Docker or containerisation** — runs as a standalone Spring Boot application.
-- **No Jakarta EE migration** — avoids breaking changes introduced in Spring 6.x / Boot 3.x.
-- **No reflection‑based mapping** — DTO ↔ domain conversion is explicit and predictable.
+- **No persistence layer** — all data is stored in‑memory using `ConcurrentHashMap`
+- **No Lombok** — explicit constructors and getters for transparency and traceability
+- **No Docker or containerisation** — runs as a standalone Spring Boot application
+- **No Jakarta EE migration** — avoids breaking changes introduced in Spring 6.x / Boot 3.x
+- **No reflection‑based mapping** — DTO ↔ domain conversion is explicit and predictable
 
 ### Runtime Compatibility
 
 | Java Version | Status           | Notes                                                                 |
 |--------------|------------------|-----------------------------------------------------------------------|
-| Java 11      | ✅ Fully supported | Target bytecode; runs natively without warnings.                      |
-| Java 21      | ✅ Fully supported | Development JDK; no Java 21‑specific features used.|
+| Java 11      | ✅ Fully supported | Target bytecode; runs natively without warnings                      |
+| Java 21      | ✅ Fully supported | Development JDK; no Java 21‑specific features used|
 
 ### Why This Stack?
 
-- **Portability** — Runs unchanged across multiple LTS JVMs.
-- **Maintainability** — Avoids premature adoption of breaking platform changes.
-- **Testability** — Full unit and integration test coverage with modern tooling.
-- **Spec Alignment** — Meets all technical requirements in the Visit Scotland Wish List Service specification.
+- **Portability** — Runs unchanged across multiple LTS JVMs
+- **Maintainability** — Avoids premature adoption of breaking platform changes
+- **Testability** — Full unit and integration test coverage with modern tooling
+- **Spec Alignment** — Meets all technical requirements in the Visit Scotland Wish List Service specification
 
 ---
 ## Endpoints
@@ -153,14 +153,14 @@ The Visit Scotland Wish List Service is built on a stable, LTS‑friendly techno
   }
 }
 ```
-- Required for add: title, category.
-- Required for remove by payload: id, title, category.
-- id is generated if absent during add.
+- Required for add: title, category
+- Required for remove by payload: id, title, category
+- id is generated if absent during add
 
 ### Response: 'ItemResponse' (JSON)
-- Same fields as ItemRequest.
-- id always present.
-- Optional fields omitted if null.
+- Same fields as ItemRequest
+- id always present
+- Optional fields omitted if null
 
 ### Response: `WishListResponse`
 
@@ -187,10 +187,10 @@ The Visit Scotland Wish List Service is built on a stable, LTS‑friendly techno
   ]
 }
 ```
-- userId: Original string identifier (e.g. test.user).
-- items: Array of ItemResponse objects.
-- Each item includes all relevant fields.
-- Optional fields like description, image, date, and metadata are omitted if null.
+- userId: Original string identifier (e.g. test.user)
+- items: Array of ItemResponse objects
+- Each item includes all relevant fields
+- Optional fields like description, image, date, and metadata are omitted if null
 
 
 ### Error Handling
@@ -207,9 +207,9 @@ Uses ResponseStatusException for precise HTTP status codes. All errors return st
 ```
 
 ### Postman Setup Tips
-- Set Content-Type: application/json in headers.
-- Use raw JSON body for POST / DELETE with payload.
-- Save common requests as Postman collections for reuse.
+- Set Content-Type: application/json in headers
+- Use raw JSON body for POST / DELETE with payload
+- Save common requests as Postman collections for reuse
 
 ---
 ## Getting Started
@@ -222,10 +222,10 @@ Follow these steps to clone the repository, build the project, start the server,
 
 Before you begin, ensure you have:
 
-- **Java Development Kit (JDK)** — Version 11 or later (JDK 21 recommended for development; compiled to Java 11 bytecode for compatibility).
-- **Apache Maven** — Version 3.9.x or later.
-- **Git** — For cloning the repository.
-- **cURL** or an API client (e.g. Postman, HTTPie) — For testing endpoints.
+- **Java Development Kit (JDK)** — Version 11 or later (JDK 21 recommended for development; compiled to Java 11 bytecode for compatibility)
+- **Apache Maven** — Version 3.9.x or later
+- **Git** — For cloning the repository
+- **cURL** or an API client (e.g. Postman, HTTPie) — For testing endpoints
 
 
 ### Clone the Repository or Download the code base
@@ -243,9 +243,9 @@ or download the zip
 mvn clean install
 ```
 This will:
-- Compile the code to Java 11 bytecode.
-- Run unit tests (WishListServiceTest) and integration tests (WishListControllerTest).
-- Package the application as a runnable JAR.
+- Compile the code to Java 11 bytecode
+- Run unit tests (WishListServiceTest) and integration tests (WishListControllerTest)
+- Package the application as a runnable JAR
 
 ### Run the Application
 
@@ -268,8 +268,8 @@ To run all tests:
 ```bash
 mvn test
 ```
-- Unit tests validate service logic, concurrency safety, and deduplication.
-- Integration tests verify endpoint behaviour, HTTP status codes, and JSON payloads.
+- Unit tests validate service logic, concurrency safety, and deduplication
+- Integration tests verify endpoint behaviour, HTTP status codes, and JSON payloads
 
 ### Project Structure
 ```bash
@@ -289,9 +289,9 @@ src/
 
 ### Default Configuration
 
-- **Port:** `8080`.
-- **Context path:** `/wishlist`.
-- **Persistence:** In‑memory only (data cleared on restart).
-- **Logging:** Console and file output with structured request/mutation logs.
+- **Port:** `8080`
+- **Context path:** `/wishlist`
+- **Persistence:** In‑memory only (data cleared on restart)
+- **Logging:** Console and file output with structured request/mutation logs
 
 ---
